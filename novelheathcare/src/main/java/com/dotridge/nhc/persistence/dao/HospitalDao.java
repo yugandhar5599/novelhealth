@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.dotridge.nhc.persistence.entity.Hospital;
 
+//comment hospitaldao
 public interface HospitalDao {
 	public Hospital addHospital(final Hospital hospital);
 
