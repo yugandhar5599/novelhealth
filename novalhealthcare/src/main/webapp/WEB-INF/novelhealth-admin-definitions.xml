@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" 
+"http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+<definition name="AdminBaseLayout" template="/WEB-INF/views/admin/baseLayout.jsp">
+	<put-attribute name="header" value="/WEB-INF/views/admin/header.jsp"/>
+	<put-attribute name="menu" value="/WEB-INF/views/admin/menu.jsp"/>
+	<put-attribute name="body" value="/WEB-INF/views/admin/body.jsp"/>
+	<put-attribute name="footer" value="/WEB-INF/views/admin/footer.jsp"/>
+</definition>
+<definition name="getAdminPatientBoard" extends="AdminBaseLayout">
+</definition>
+<definition name="getPatientBoard" extends="AdminBaseLayout">
+	<put-attribute name="body" value="/WEB-INF/views/admin/patientBoard.jsp"></put-attribute>
+</definition>
+<definition name="addPatientFormDef" extends="AdminBaseLayout">
+	<put-attribute name="body" value="/WEB-INF/views/admin/addPatient.jsp">
+	</put-attribute>
+</definition>
+<definition name="editPatientDef" extends="AdminBaseLayout">
+	<put-attribute name="body" value="/WEB-INF/views/admin/editPatient.jsp">
+	</put-attribute>
+</definition>
+</tiles-definitions>
