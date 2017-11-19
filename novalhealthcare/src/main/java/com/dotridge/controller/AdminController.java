@@ -11,8 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.dotridge.beans.AdminBean;
-import com.dotridge.beans.HospitalBean;
+import com.dotridge.bean.AdminBean;
+import com.dotridge.bean.HospitalBean;
 import com.dotridge.service.AdminService;
 import com.dotridge.service.HospitalService;
 import com.dotridge.util.ServiceConstants;

@@ -2,7 +2,7 @@ package com.dotridge.service;
 
 import java.util.List;
 
-import com.dotridge.beans.NurseBean;
+import com.dotridge.bean.NurseBean;
 import com.dotridge.domain.Nurse;
 
 public interface NurseServive {

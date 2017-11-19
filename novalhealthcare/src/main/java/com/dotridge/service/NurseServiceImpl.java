@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.dotridge.beans.NurseBean;
+import com.dotridge.bean.NurseBean;
 import com.dotridge.dao.NurseDao;
 import com.dotridge.domain.Nurse;
 

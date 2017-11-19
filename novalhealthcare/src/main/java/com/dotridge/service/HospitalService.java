@@ -2,7 +2,7 @@ package com.dotridge.service;
 
 import java.util.List;
 
-import com.dotridge.beans.HospitalBean;
+import com.dotridge.bean.HospitalBean;
 import com.dotridge.domain.Hospital;
 
 public interface HospitalService 

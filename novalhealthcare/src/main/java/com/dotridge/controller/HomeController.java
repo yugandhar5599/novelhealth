@@ -8,8 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.dotridge.beans.LoginBean;
-import com.dotridge.beans.ManageUserProfileBean;
+import com.dotridge.bean.LoginBean;
+import com.dotridge.bean.ManageUserProfileBean;
 
 /**
  * @author ALWAR

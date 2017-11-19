@@ -2,7 +2,7 @@ package com.dotridge.service;
 
 import java.util.List;
 
-import com.dotridge.beans.AdminBean;
+import com.dotridge.bean.AdminBean;
 import com.dotridge.domain.Admin;
 
 public interface AdminService 

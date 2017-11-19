@@ -7,7 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.dotridge.beans.AdminBean;
+import com.dotridge.bean.AdminBean;
 import com.dotridge.dao.AdminDao;
 import com.dotridge.dao.HospitalDao;
 import com.dotridge.domain.Admin;
