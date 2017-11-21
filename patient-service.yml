@@ -21,4 +21,4 @@ server:
 ---
 spring: 
   profiles:
-   active: qa      
+   active: dev      
