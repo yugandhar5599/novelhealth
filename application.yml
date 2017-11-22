@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    hikari: 
+        driver-class-name: com.mysql.jdbc.Driver
+        jdbc-url: jdbc:mysql://localhost:3306/doctor-dev
+        username: root
+        password: root
+  profiles: dev  
+---    
+spring:
+  datasource:
+    hikari: 
+       driver-class-name: com.mysql.jdbc.Driver
+       jdbc-url: jdbc:mysql://localhost:3306/doctor-qa
+       username: root
+       password: root 
+  profiles: qa 
+---
+spring: 
+  profiles:
+   active: dev      
