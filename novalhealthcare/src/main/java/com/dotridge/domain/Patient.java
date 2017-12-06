@@ -8,44 +8,55 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 import org.hibernate.annotations.Type;
+
 @Entity
-public class Patient implements Serializable{
-	@javax.persistence.Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+public class Patient implements Serializable
+{
+	private static final long serialVersionUID = 1L;
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int pId;
+	@Column(nullable=false)
 	private String firstName;
 	private String middleName;
+	@Column(nullable=false)
 	private String lastName;
+	@Column(unique=true, nullable=false)
 	private String email;
+	@Column(nullable=false)
 	private String address;
+	@Column(unique=true, nullable=false)
 	private long phone;
+	@Column(nullable=false)
 	private String password;
+	@Column(nullable=false)
 	private String gender;
+	@Column(nullable=false)
 	private String bloodGroup;
-	private Date date;
+	@Column(nullable=false)
+	private Date dateOfBirth;
 	private File requiredDocument;
+	@Column(nullable=false)
 	private String createdBy;
+	@Column(nullable=false)
 	private Date createdDate;
+	@Column(nullable=false)
 	private String modifiedBy;
+	@Column(nullable=false)
 	private Date modifiedDate;
-	@Column
+	@Column(nullable=false)
 	@Type(type = "yes_no")
 	private boolean status = false;
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
 	public int getpId() {
 		return pId;
 	}
 	public void setpId(int pId) {
 		this.pId = pId;
 	}
-	
 	public String getFirstName() {
 		return firstName;
 	}
@@ -82,6 +93,12 @@ public class Patient implements Serializable{
 	public void setPhone(long phone) {
 		this.phone = phone;
 	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
 	public String getGender() {
 		return gender;
 	}
@@ -94,11 +111,11 @@ public class Patient implements Serializable{
 	public void setBloodGroup(String bloodGroup) {
 		this.bloodGroup = bloodGroup;
 	}
-	public Date getDate() {
-		return date;
+	public Date getDateOfBirth() {
+		return dateOfBirth;
 	}
-	public void setDate(Date date) {
-		this.date = date;
+	public void setDateOfBirth(Date dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
 	}
 	public File getRequiredDocument() {
 		return requiredDocument;
@@ -137,6 +154,14 @@ public class Patient implements Serializable{
 		this.status = status;
 	}
 	@Override
+	public String toString() {
+		return "Patient [pId=" + pId + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName="
+				+ lastName + ", email=" + email + ", address=" + address + ", phone=" + phone + ", password=" + password
+				+ ", gender=" + gender + ", bloodGroup=" + bloodGroup + ", dateOfBirth=" + dateOfBirth
+				+ ", requiredDocument=" + requiredDocument + ", createdBy=" + createdBy + ", createdDate=" + createdDate
+				+ ", modifiedBy=" + modifiedBy + ", modifiedDate=" + modifiedDate + ", status=" + status + "]";
+	}
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
@@ -144,7 +169,7 @@ public class Patient implements Serializable{
 		result = prime * result + ((bloodGroup == null) ? 0 : bloodGroup.hashCode());
 		result = prime * result + ((createdBy == null) ? 0 : createdBy.hashCode());
 		result = prime * result + ((createdDate == null) ? 0 : createdDate.hashCode());
-		result = prime * result + ((date == null) ? 0 : date.hashCode());
+		result = prime * result + ((dateOfBirth == null) ? 0 : dateOfBirth.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
 		result = prime * result + ((gender == null) ? 0 : gender.hashCode());
@@ -188,10 +213,10 @@ public class Patient implements Serializable{
 				return false;
 		} else if (!createdDate.equals(other.createdDate))
 			return false;
-		if (date == null) {
-			if (other.date != null)
+		if (dateOfBirth == null) {
+			if (other.dateOfBirth != null)
 				return false;
-		} else if (!date.equals(other.date))
+		} else if (!dateOfBirth.equals(other.dateOfBirth))
 			return false;
 		if (email == null) {
 			if (other.email != null)
@@ -246,7 +271,5 @@ public class Patient implements Serializable{
 			return false;
 		return true;
 	}
-	
-	
 	
 }

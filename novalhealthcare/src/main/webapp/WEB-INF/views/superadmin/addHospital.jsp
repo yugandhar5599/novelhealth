@@ -53,7 +53,7 @@
 					<div class="panel-heading">
 						<div class="row">
 							<div class="col-xs-6">							
-									<h3><label class="active" id="login-form-link">ADD HOSPITAL</label></h3>
+									<label class="active" id="login-form-link">Add Hospital</label>
 							</div>
 							
 						</div>
@@ -62,43 +62,43 @@
 					<div class="panel-body">
 						<div class="row">
 							<div class="col-lg-12">
-								<form:form id="registration-form" action="./addHospital"  commandName="hospBean" method="post" role="form" style="display: block;">
-									<label>Hospital Name</label>
+								<form:form id="registration-form" action="./addHospital"  commandName="hospitalName" method="POST" role="form" style="display: block;">
 									<div class="form-group">
-									
-										<form:input path="hospitalName" type="text"  id="firstName" tabindex="1" class="form-control" placeholder="Hospital Name" value=""></form:input>
+										Hospital Name <form:input path="hospitalName" type="text"  id="firstName" tabindex="1" class="form-control" placeholder="HospitalName" value=""></form:input>
 									</div>
-									<label>Email</label>
 									<div class="form-group">
 										<form:input path="email" type="text"  id="email" tabindex="1" class="form-control" placeholder="Email" value=""></form:input>
 									</div>
-									<label>Phone Number</label>
 									<div class="form-group">
 										<form:input path="phone" type="text"  id="phoneNumber" tabindex="1" class="form-control" placeholder="PhoneNumber" value=""></form:input>
 									</div>
-									<label>Address 1</label>
+									<div class="form-group">
+										<form:input path="fax" type="text"  id="faxNumber" tabindex="1" class="form-control" placeholder="FaxNumber" value=""></form:input>
+									</div>
 									<div class="form-group">
 										<form:input path="address1" type="text"  id="address1" tabindex="1" class="form-control" placeholder="Address1" value=""></form:input>
 									</div>
-									<label>Address 2</label>
 									<div class="form-group">
 										<form:input path="address2" type="text"  id="address2" tabindex="1" class="form-control" placeholder="Address2" value=""></form:input>
 									</div>
-									<label>City</label>
 									<div class="form-group">
 										<form:input path="city" type="text"  id="city" tabindex="1" class="form-control" placeholder="City" value=""></form:input>
 									</div>
-									<label>State</label>
 									<div class="form-group">
 										<form:input path="state" type="text"  id="state" tabindex="1" class="form-control" placeholder="State" value=""></form:input>
 									</div>
-									<%-- <div class="form-group">
-										<form:input path="zipCode" type="text"  id="zipCode" tabindex="1" class="form-control" placeholder="ZipCode" value=""></form:input>
-									</div> --%>
-									<label>Status</label>
 									<div class="form-group">
-										<form:input path="status" type="text"  id="status" tabindex="1" class="form-control" placeholder="Status" value=""></form:input>
+										<form:input path="zipCode" type="text"  id="zipCode" tabindex="1" class="form-control" placeholder="ZipCode" value=""></form:input>
 									</div>
+									<div class="form-group">
+										<form:radiobutton path="status" id="status" tabindex="1"  value="true"/>Active
+										<form:radiobutton path="status" id="status" tabindex="1"  value="false" />In Active
+									</div>
+									
+																		
+									
+									<!-- <input type="radio" name="status" value="0" checked="checked">Active
+											<input type="radio" name="status" value="1">Inactive  -->
 									<!-- <div class="form-group text-center">
 										<input type="checkbox" tabindex="3" class="" name="remember" id="remember">
 										<label for="remember"> Remember Me</label>
@@ -127,6 +127,19 @@
 		</div>
 	</div>
 	
+        <div class="container">
+
+            <div class="row row-offcanvas row-offcanvas-right">
+
+                <div class="col-xs-12 col-sm-9">
+               
+                 <hr>
+	 
+	  <footer>
+                <p>© Company 2014</p>
+      </footer>
+	</div>
+	</div></div>
 	
 </body>
 </html>

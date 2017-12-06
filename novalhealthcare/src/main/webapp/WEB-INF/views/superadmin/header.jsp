@@ -49,22 +49,22 @@
         </li>
       </ul> -->
       <p class="navbar-text navbar-right">
-      <div class="navbar-header">
-                 
-                    <img src="./resources/images/hospital-logo.jpg" alt="logo" class="img img-responsive"  width="50" height="50"/></a>
-                </div>
-                <span class="label label-primary">Novel Health Care</span>
-                <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-          <img src="./resources/images/profile.png" alt="logo" class="img img-responsive"  width="50" height="50"/>
-          <span class="glyphicon glyphicon-header"><font color="white">Super Admin</font></span><span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#"><span class="label label-primary">Profile</span></a></li>
-            <li><a href="#"><span class="label label-default">Sign out</span></a></li>
-          </ul>
-        </li>
-      </ul> 
-      </p>
-</body>
+	      <div class="navbar-header">
+	      	<img src="./resources/images/hospital-logo.jpg" alt="logo" class="img img-responsive"  width="80" height="80"/>
+	      </div>
+	      <span class="label label-primary">Novel Health Care</span>
+	      <ul class="nav navbar-nav navbar-right">
+	        <li class="dropdown">
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+		          <img src="resources/images/profile.png" alt="logo" class="img img-responsive"  width="50" height="50"/>
+		          <span class="glyphicon glyphicon-header"><font color="white">Super Admin</font></span>
+		          <span class="caret"></span>
+		      </a>
+	          <ul class="dropdown-menu">
+	            <li><a href="#"><span class="label label-primary">Profile</span></a></li>
+	            <li><a href="./logout"><span class="label label-default">Sign out</span></a></li>
+	          </ul>
+	        </li>
+	      </ul>
+	</body>
 </html>

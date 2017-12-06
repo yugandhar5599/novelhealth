@@ -25,7 +25,7 @@ crossorigin="anonymous"></script>
 </td>
 </tr> --%>
 <tr>
-<td  id="menuid" bgcolor="black">
+<td  id="menuid" bgcolor="skyblue">
 <tiles:insertAttribute name="menu"></tiles:insertAttribute>
 </td>
 <td  id="bodyid">

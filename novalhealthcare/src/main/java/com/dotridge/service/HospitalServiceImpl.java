@@ -11,88 +11,30 @@ import com.dotridge.bean.HospitalBean;
 import com.dotridge.dao.HospitalDao;
 import com.dotridge.domain.Hospital;
 
-@Service()
-public class HospitalServiceImpl implements HospitalService {
+
+@Service
+public class HospitalServiceImpl implements HospitalService 
+{
 	@Autowired
 	private HospitalDao hospitalDao;
-
-	public HospitalBean addHospital(HospitalBean hostpitalBean) {
-
-		Hospital hospitalDomain = hospitalDao.addHospital(mapBeanToDomain(hostpitalBean));
-
-		return mapDomainToBean(hospitalDomain);
-	}
-
-	public boolean deleteHospital(int hospitalId) {
-		hospitalDao.deleteHospital(hospitalId);
-		return false;
-	}
-
-	public boolean activateHospital(int hospitalId) {
-		return false;
-	}
-
-	public boolean inactivateHospital(int hospitalId) {
-		return false;
-	}
-
-	public List<HospitalBean> getAllHospital() {
-		List<Hospital> hosplist = hospitalDao.getAllHospital();
-		System.out.println("list of hospitals are" + hosplist.size());
-		List<HospitalBean> uihosplist = null;
-
-		if (hosplist != null && !hosplist.isEmpty()) {
-			System.out.println("if  execution successfully");
-			uihosplist = new ArrayList<HospitalBean>();
-			for (Hospital hospitalDomain : hosplist) {
-				HospitalBean hospBean = mapDomainToBean(hospitalDomain);
-				uihosplist.add(hospBean);
-			}
-			System.out.println(uihosplist.size());
-			return uihosplist;
-		} else {
-			//throw new RuntimeException("No Hosp are available");
-
-		}
-		return uihosplist;
-	}
-
-	public List<HospitalBean> searchHospital(String hospitalName, String address1, String email, long phone,
-			boolean status) {
-		return null;
-	}
-
-	public HospitalBean getHospitalById(int hospitalId) {
-
-		return mapDomainToBean(hospitalDao.getHospitalById(hospitalId));
-	}
-
-	public Hospital mapBeanToDomain(HospitalBean hospitalBean) {
+	public Hospital mapBeanToDomain(HospitalBean hospitalBean) 
+	{
 		Date date = new Date();
-
+		
 		Hospital hospital = new Hospital();
-
-		if (hospitalBean.getHospitalId() > 0) {
-
-			hospital.setId(hospitalBean.getHospitalId());
-		}
-
+		hospital.setHospitalId(hospitalBean.getHospitalId());
 		hospital.setHospitalName(hospitalBean.getHospitalName());
 		hospital.setAddress1(hospitalBean.getAddress1());
 		hospital.setAddress2(hospitalBean.getAddress2());
 		hospital.setCity(hospitalBean.getCity());
 		hospital.setState(hospitalBean.getState());
-		// hospital.setZipCode(hospitalBean.getZipCode());
+		hospital.setZipCode(hospitalBean.getZipCode());
 		hospital.setEmail(hospitalBean.getEmail());
-		// hospital.setPhone(hospitalBean.getPhone());
-		hospital.setFax(hospitalBean.getFax());
-
 		hospital.setPhone(hospitalBean.getPhone());
+		hospital.setFax(hospitalBean.getFax());
+		hospital.setLogo(hospitalBean.getLogo());
+		hospital.setRegistrationDocument(hospitalBean.getRegistrationDocument());
 		hospital.setStatus(hospitalBean.isStatus());
-
-		// hospital.setLogo(hospitalBean.getLogo());
-		// hospital.setRegistrationDocument(hospitalBean.getRegistrationDocument());
-		// hospital.setStatus(hospitalBean.getStatus());
 		hospital.setCreatedBy("Yugandhar");
 		hospital.setCreatedDate(date);
 		hospital.setModifiedBy("Yugandhar");
@@ -100,90 +42,180 @@ public class HospitalServiceImpl implements HospitalService {
 		return hospital;
 	}
 
-	public HospitalBean mapDomainToBean(Hospital hospitalDomain) {
+	public HospitalBean mapDomainToBean(Hospital hospitalDomain) 
+	{
 		HospitalBean hospitalBean = new HospitalBean();
-
-		hospitalBean.setHospitalId(hospitalDomain.getId());
+		hospitalBean.setHospitalId(hospitalDomain.getHospitalId());
 		hospitalBean.setHospitalName(hospitalDomain.getHospitalName());
 		hospitalBean.setAddress1(hospitalDomain.getAddress1());
 		hospitalBean.setAddress2(hospitalDomain.getAddress2());
 		hospitalBean.setCity(hospitalDomain.getCity());
 		hospitalBean.setState(hospitalDomain.getState());
-
-		hospitalBean.setPhone(hospitalDomain.getPhone());
-		hospitalBean.setStatus(hospitalDomain.isStatus());
-
-		// hospitalBean.setZipCode(hospitalDomain.getZipCode());
+		hospitalBean.setZipCode(hospitalDomain.getZipCode());
 		hospitalBean.setEmail(hospitalDomain.getEmail());
-		// hospitalBean.setPhone(hospitalDomain.getPhone());
+		hospitalBean.setPhone(hospitalDomain.getPhone());
 		hospitalBean.setFax(hospitalDomain.getFax());
-		// hospitalBean.setLogo(hospitalDomain.getLogo());
-		// hospitalBean.setRegistrationDocument(hospitalDomain.getRegistrationDocument());
-		// hospitalBean.setStatus(hospitalDomain.getStatus());
+		hospitalBean.setLogo(hospitalDomain.getLogo());
+		hospitalBean.setRegistrationDocument(hospitalDomain.getRegistrationDocument());
+		hospitalBean.setStatus(hospitalDomain.isStatus());
 		return hospitalBean;
 	}
 
-	public HospitalBean updateHospital(HospitalBean hospitalBean) {
+	/*public HospitalBean createHospital(Hospital hospitalBean) 
+	{
+		Hospital hospital = hospitalDao.createHospital(mapBeanToDomain(hospitalBean));
+		HospitalBean hospitalBean2 = mapDomainToBean(hospital);
+		return hospitalBean2;
+	}*/
 
-		Hospital hospitalDomain = hospitalDao.updateHospital(mapBeanToDomain(hospitalBean));
-
-		return mapDomainToBean(hospitalDomain);
+	public HospitalBean updateHospital(HospitalBean hospitalBean) 
+	{
+		Hospital hospital = mapBeanToDomain(hospitalBean);
+		HospitalBean hospitalBean2 = mapDomainToBean(hospitalDao.updateHospital(hospital));
+		return hospitalBean2;
 	}
 
-	public List<HospitalBean> getHospitalByName(String hospitalName) {
-		List<Hospital> hosplist = hospitalDao.getHospitalByName(hospitalName);
-		List<HospitalBean> uihosplist = null;
+	public HospitalBean getHospitalById(int id) 
+	{
+		Hospital hospital = hospitalDao.getHospitalById(id);
+		HospitalBean hospitalBean = mapDomainToBean(hospital);
+		return hospitalBean;
+	}
 
-		if (hosplist != null && !hosplist.isEmpty()) {
-			System.out.println("if  execution successfully");
-			uihosplist = new ArrayList<HospitalBean>();
-			for (Hospital hospitalDomain : hosplist) {
-				HospitalBean hospBean = mapDomainToBean(hospitalDomain);
-				uihosplist.add(hospBean);
+	public List<HospitalBean> getHospitalByName(String hospitalName) 
+	{
+		List<Hospital> hospitalList = hospitalDao.getHospitalByName(hospitalName);
+		List<HospitalBean> uiHospitalList = null;
+		if(hospitalList != null && !hospitalList.isEmpty())
+		{
+			uiHospitalList = new ArrayList<HospitalBean>();
+			for(Hospital hospitalDomain : hospitalList)
+			{
+				HospitalBean hospitalBean = mapDomainToBean(hospitalDomain);
+				uiHospitalList.add(hospitalBean);
 			}
-			System.out.println(uihosplist.size());
-			return uihosplist;
-		} else {
-			// System.out.println("else block executed");
-			throw new RuntimeException("No Hosp are available");
+			return uiHospitalList;
 		}
+		return null;
 	}
-
-	public List<HospitalBean> getHospitalByEmail(String email) {
-		List<Hospital> hosplist = hospitalDao.getHospitalByEmail(email);
-		List<HospitalBean> uihosplist = null;
-
-		if (hosplist != null && !hosplist.isEmpty()) {
-			System.out.println("if  execution successfully");
-			uihosplist = new ArrayList<HospitalBean>();
-			for (Hospital hospitalDomain : hosplist) {
-				HospitalBean hospBean = mapDomainToBean(hospitalDomain);
-				uihosplist.add(hospBean);
+	
+	public List<HospitalBean> getHospitalByEmail(String email)
+	{
+		List<Hospital> hospitalDomainList = hospitalDao.getHospitalByEmail(email);
+		List<HospitalBean> hospitalBeansList = null;
+		
+		if(hospitalDomainList != null && !hospitalDomainList.isEmpty())
+		{
+			hospitalBeansList = new ArrayList<HospitalBean>();
+			for(Hospital hospitalDomain : hospitalDomainList)
+			{
+				HospitalBean hospitalBean = mapDomainToBean(hospitalDomain);
+				hospitalBeansList.add(hospitalBean);
 			}
-			System.out.println(uihosplist.size());
-			return uihosplist;
-		} else {
-			// System.out.println("else block executed");
-			throw new RuntimeException("No Hosp are available");
+			return hospitalBeansList;
 		}
+		return null;
 	}
-
-	public List<HospitalBean> getAllHospitalsByPaging(int currPage, int noOfRecPage) {
-		List<Hospital> hospDomainList = hospitalDao.getAllHospitalsByPaging(currPage, noOfRecPage);
-		List<HospitalBean> hospBeanList = null;
-		if (hospDomainList != null && !hospDomainList.isEmpty()) {
-			hospBeanList = new ArrayList<HospitalBean>();
-			for (Hospital hosp : hospDomainList) {
-				hospBeanList.add(mapDomainToBean(hosp));
+	
+	public List<HospitalBean> getHospitalByAddress1(String address1)
+	{
+		List<Hospital> hospitalDomainList = hospitalDao.getHospitalByAddress1(address1);
+		List<HospitalBean> hospitalBeansList = null;
+		
+		if(hospitalDomainList != null && !hospitalDomainList.isEmpty())
+		{
+			hospitalBeansList = new ArrayList<HospitalBean>();
+			for(Hospital hospitalDomain : hospitalDomainList)
+			{
+				HospitalBean hospitalBean = mapDomainToBean(hospitalDomain);
+				hospitalBeansList.add(hospitalBean);
 			}
+			return hospitalBeansList;
 		}
-
-		return hospBeanList;
+		return null;
 	}
-	/*
-	 * public static void main(String[] args) {
-	 * 
-	 * List<Hospital> hosplist = hospitalDao.getAllHospital();
-	 * System.out.println("list of hospitals are" + hosplist.size()); }
-	 */
+	
+	public List<HospitalBean> getHospitalByPhone(long phoneNumber)
+	{
+		List<Hospital> hospitalDomainList = hospitalDao.getHospitalByPhone(phoneNumber);
+		List<HospitalBean> hospitalBeansList = null;
+		if(hospitalDomainList != null && !hospitalDomainList.isEmpty())
+		{
+			hospitalBeansList = new ArrayList<HospitalBean>();
+			for(Hospital hospitalDomain : hospitalDomainList)
+			{
+				HospitalBean hospitalBean = mapDomainToBean(hospitalDomain);
+				hospitalBeansList.add(hospitalBean);
+			}
+			return hospitalBeansList;
+		}
+		return null;
+	}
+	
+	public List<HospitalBean> getHospitalByStatus(Boolean status)
+	{
+		List<Hospital> hospitalDomainList = hospitalDao.getHospitalByStatus(status);
+		List<HospitalBean> hospitalBeansList = null;
+		if(hospitalDomainList != null && !hospitalDomainList.isEmpty())
+		{
+			hospitalBeansList = new ArrayList<HospitalBean>();
+			for(Hospital hospitalDomain : hospitalDomainList)
+			{
+				HospitalBean hospitalBean = mapDomainToBean(hospitalDomain);
+				hospitalBeansList.add(hospitalBean);
+			}
+			return hospitalBeansList;
+		}
+		return null;
+	}
+
+	public List<HospitalBean> getAllHospitals() 
+	{
+		List<Hospital> hospitalList = hospitalDao.getAllHospitals();
+		List<HospitalBean> uiHospitalList = null;
+		if(hospitalList != null && !hospitalList.isEmpty())
+		{
+			uiHospitalList = new ArrayList<HospitalBean>();
+			for(Hospital hospitalDomain : hospitalList)
+			{
+				HospitalBean hospitalBean = mapDomainToBean(hospitalDomain);
+				uiHospitalList.add(hospitalBean);
+			}
+			return uiHospitalList;
+		}
+		else
+			throw new RuntimeException("No Hospital Available");
+	}
+
+	public boolean deleteHospital(int id) 
+	{
+		boolean flag = hospitalDao.deleteHospital(id);
+		return flag;
+	}
+
+	public List<HospitalBean> getAllHospitalsByPagining(int currentPage, int numberOfRecords) 
+	{
+		List<Hospital> hospitalList = hospitalDao.getAllHospitalsByPagining(currentPage, numberOfRecords);
+		List<HospitalBean> uiHospitalList = null;
+		if(hospitalList != null && !hospitalList.isEmpty())
+		{
+			uiHospitalList = new ArrayList<HospitalBean>();
+			for(Hospital hospitalDomain : hospitalList)
+			{
+				HospitalBean hospitalBean = mapDomainToBean(hospitalDomain);
+				uiHospitalList.add(hospitalBean);
+			}
+			return uiHospitalList;
+		}
+		else
+			throw new RuntimeException("No Hospital Available");
+	}
+
+	public HospitalBean createHospital(HospitalBean hospitalBean) 
+	{
+		Hospital hospital = mapBeanToDomain(hospitalBean);
+		HospitalBean hospitalBean2 = mapDomainToBean(hospitalDao.createHospital(hospital));
+		return hospitalBean2;
+	}
+
 }

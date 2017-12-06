@@ -5,160 +5,244 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.hibernate.mapping.Array;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.dotridge.bean.HospitalBean;
 import com.dotridge.service.HospitalService;
-import com.dotridge.util.ServiceConstance;
+import com.dotridge.util.ServiceConstants;
 
 @Controller
-@RequestMapping("/hospitalMgmt")
-public class HospitalController {
+@RequestMapping(value="/hospitalManagement")
+public class HospitalController 
+{
 	@Autowired
 	private HospitalService hospitalService;
-
-	@RequestMapping(value = "/getAllHospitals")
-	public ModelAndView viewAllHospitals() {
-		try {
-			List<HospitalBean> uihosplist = hospitalService.getAllHospital();
-			ModelAndView mav = new ModelAndView();
-			mav.setViewName("getHospitalBoard");
-			System.out.println("list of hospitals" + uihosplist);
-			/*
-			 * int listSize=uihosplist.size(); int
-			 * pagePerSize=(listSize/ServiceConstance.NUBER_OF_REC_PER_PAGE)+1;
-			 * int pageSize= (int)
-			 * Math.round(Double.valueOf(String.valueOf(pagePerSize))); List
-			 * pageBarSize=new ArrayList(); for(int i=0;i<pageSize;i++){
-			 * pageBarSize.add(i); }
-			 * 
-			 * System.out.println("page bar size"+pageBarSize.size());
-			 * mav.addObject("pagePerSize",pageBarSize);
-			 */
-			mav.addObject("uihosplist", uihosplist);
-			return mav;
-		} catch (Exception e) {
-
+	
+	@RequestMapping(value="/getHomePage")
+	public String getHomePage()
+	{
+		return "getHomeBoard";
+	}
+	
+	@RequestMapping(value="/getAllHospitals")
+	public String viewAllHospitals(Model model)
+	{
+		try
+		{
+			List<HospitalBean> uiHospitalList = hospitalService.getAllHospitals();
+			int uiListSize = uiHospitalList.size();
+			int recordsPerPage = Math.round((uiListSize / ServiceConstants.NUMBER_OF_RECORDS_PER_PAGE) + 1);
+			List<Integer> pageBarList = new ArrayList<Integer>();
+			for(int i = 0; i < recordsPerPage; i++)
+			{
+				pageBarList.add(i + 1);
+			}
+			System.out.println("recordsPerPage : " + recordsPerPage);
+			System.out.println("pageBarList : " + pageBarList.size());
+			model.addAttribute("pageBarList",pageBarList);
+			model.addAttribute("uiHospitalList" ,uiHospitalList);
+			//System.out.println(uiHospitalList);
+			return "getHospitalBoard";
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
 		}
 		return null;
 	}
-
-	@RequestMapping("/getAllHospitalsByPaging")
-	public String getAllHospitalsByPaging(HttpServletRequest request, Model model) {
-		String cuurentPage = request.getParameter("currentPage");
-		int cPage = Integer.valueOf(cuurentPage);
-		int noOfReocrdsPages = ServiceConstance.NUBER_OF_REC_PER_PAGE;
-		List<HospitalBean> uihosplist = hospitalService.getAllHospitalsByPaging(cPage, noOfReocrdsPages);
-		model.addAttribute("uihosplist", uihosplist);
-
-		List<HospitalBean> hosplist = hospitalService.getAllHospital();
-		System.out.println("list of hospitals" + hosplist.size());
-		int listSize = hosplist.size();
-		int pagePerSize = (listSize / ServiceConstance.NUBER_OF_REC_PER_PAGE) + 1;
-		int pageSize = (int) Math.round(Double.valueOf(String.valueOf(pagePerSize)));
-		List pageBarSize = new ArrayList();
-		for (int i = 0; i < pageSize; i++) {
-			pageBarSize.add(i);
-		}
-
-		System.out.println("page bar size" + pageBarSize.size());
-		model.addAttribute("pagePerSize", pageBarSize);
-
-		return "getHospitalBoard";
-	}
-
-	@RequestMapping("/getHospitalRegForm")
-	public String getHospitalRegForm(Model model) {
-		HospitalBean hospBean = new HospitalBean();
-		model.addAttribute("hospBean", hospBean);
+	
+	@RequestMapping(value="/getHospitalRegForm")
+	public String getHospitalRegistrationForm(Model model)
+	{
+		HospitalBean hospitalBean = new HospitalBean();
+		model.addAttribute("hospitalName",hospitalBean);
 		return "addHospitalFormDef";
 	}
-
-	@RequestMapping(value = "/addHospital", method = RequestMethod.POST)
-	public ModelAndView addHospital(@ModelAttribute("hospBean") HospitalBean hospBean) {
-		// System.out.println(hospBean.toString());
-		hospitalService.addHospital(hospBean);
-		try {
-			List<HospitalBean> uihosplist = hospitalService.getAllHospital();
-			ModelAndView mav = new ModelAndView();
-			mav.setViewName("getHospitalBoard");
-			System.out.println("list of hospitals" + uihosplist.size());
-			mav.addObject("uihosplist", uihosplist);
-			return mav;
-		} catch (Exception e) {
+	
+	@RequestMapping(value="/addHospital", method=RequestMethod.POST)
+	public String addHospital(@ModelAttribute("hospitalName") HospitalBean hospitalBean, Model model)
+	{
+		System.out.println(hospitalBean.toString());
+		HospitalBean hospitalBean2 = hospitalService.createHospital(hospitalBean);
+		if(hospitalBean2.getHospitalId() > 0)
+		{
+				List<HospitalBean> uiHospitalList = hospitalService.getAllHospitals();
+				model.addAttribute("uiHospitalList" ,uiHospitalList);
+				//System.out.println(uiHospitalList);
+				return "getHospitalBoard";
 		}
-		return null;
+		else
+		{
+			System.out.println("Hospital Adding is failed");
+			return "getHospitalBoard";
+		}	
 	}
-
-	@RequestMapping("/editHospital")
-	public String editHospital(HttpServletRequest request, Model model) {
-		String hospId = request.getParameter("hospId");
-
-		System.out.println("Hospital Id..\t" + hospId);
-		HospitalBean hospBean = hospitalService.getHospitalById(Integer.valueOf(hospId));
-		System.out.println("HospitalBean..\t" + hospBean.toString());
-		model.addAttribute("hospBean", hospBean);
+	
+	@RequestMapping(value="/editHospital")
+	public String editHospital(HttpServletRequest request, Model model)
+	{
+		String hospitalId = request.getParameter("hospId");
+		HospitalBean hospitalBean = hospitalService.getHospitalById(Integer.valueOf(hospitalId));
+		model.addAttribute("hospitalBean",hospitalBean);
+		System.out.println(hospitalBean.getHospitalId());
 		return "editHospitalDef";
 	}
-
-	@RequestMapping("/deleteHospital")
-	public String deleteHospital(HttpServletRequest request, Model model) {
-		String hospId = request.getParameter("hospId");
-
-		System.out.println("Hospital delete Id..\t" + hospId);
-		hospitalService.deleteHospital(Integer.valueOf(hospId));
-
-		return "redirect:getAllHospitals";
-	}
-
-	@RequestMapping(value = "/updateHospital")
-	public ModelAndView updateHospital(@ModelAttribute("hospBean") HospitalBean hospBean) {
-
-		System.out.println("hospBean in controller is:\t" + hospBean.toString());
-		hospitalService.updateHospital(hospBean);
-		try {
-			List<HospitalBean> uihosplist = hospitalService.getAllHospital();
-			ModelAndView mav = new ModelAndView();
-			mav.setViewName("getHospitalBoard");
-			System.out.println("list of hospitals" + uihosplist.size());
-
-			mav.addObject("uihosplist", uihosplist);
-			return mav;
-		} catch (Exception e) {
-
+	
+	@RequestMapping(value="/updateHospital",method=RequestMethod.POST)
+	public String updateHospital(@ModelAttribute("hospitalBean")HospitalBean hospitalBean, Model model)
+	{
+		System.out.println(hospitalBean.getHospitalId());
+		System.out.println(hospitalBean.getHospitalName());
+		System.out.println(hospitalBean.getState());
+		HospitalBean hospitalBean2 = hospitalBean;
+		if(hospitalBean2 != null && hospitalBean.getHospitalId() > 0)
+		{
+			hospitalService.updateHospital(hospitalBean2);
+			List<HospitalBean> uiHospitalList = hospitalService.getAllHospitals();
+			model.addAttribute("uiHospitalList" ,uiHospitalList);
+			//System.out.println(uiHospitalList);
+			return "getHospitalBoard";
 		}
-		return null;
+		else
+		{
+			System.out.println("Hospital Adding is failed");
+			return "getHospitalBoard";
+		}		
 	}
-
-	@RequestMapping("/searchHospital")
-	public String searchHospital(HttpServletRequest req, Model model) {
-
-		String searchKey = req.getParameter("searchKey");
-		String searchValue = req.getParameter("searchValue");
-
-		System.out.println(searchKey + " " + searchValue);
-
-		if ((searchKey != null && !searchKey.isEmpty()) && (searchValue != null && !searchValue.isEmpty())) {
-			if (searchKey.equalsIgnoreCase("hospitalName")) {
-				List<HospitalBean> hosplist = hospitalService.getHospitalByName(searchValue);
-				model.addAttribute("uihosplist", hosplist);
+	
+	@RequestMapping(value="/deleteHospital")
+	public String deleteHospital(HttpServletRequest request,Model model)
+	{
+		String hospitalId = request.getParameter("hospId");
+		boolean flag = hospitalService.deleteHospital(Integer.valueOf(hospitalId));
+		if(flag == true)
+		{
+			System.out.println("One row deleted successfully");
+			List<HospitalBean> uiHospitalList = hospitalService.getAllHospitals();
+			model.addAttribute("uiHospitalList",uiHospitalList);
+			return "getHospitalBoard";
+		}
+		else
+		{
+			System.out.println("deletion failed");
+			List<HospitalBean> uiHospitalList = hospitalService.getAllHospitals();
+			model.addAttribute(uiHospitalList);
+			return "getHospitalBoard";
+		}
+	}
+	
+	@RequestMapping(value="/searchHospitals")
+	public String searchHospitals(HttpServletRequest request, Model model)
+	{
+		String searchKey = request.getParameter("searchKey");
+		String searchValue = request.getParameter("searchValue");
+		if(searchKey != null && !searchKey.isEmpty() && searchValue != null && !searchValue.isEmpty())
+		{
+			if(searchKey.equalsIgnoreCase("HospitalName"))
+			{
+				List<HospitalBean> hospitalsList = hospitalService.getHospitalByName(searchValue);
+				if(hospitalsList != null && !hospitalsList.isEmpty())
+				{
+					model.addAttribute("uiHospitalList",hospitalsList);
+					return "getHospitalBoard";
+				}
+				System.out.println("Error");
 				return "getHospitalBoard";
 			}
-			if (searchKey.equalsIgnoreCase("email")) {
-				List<HospitalBean> hosplist = hospitalService.getHospitalByEmail(searchValue);
-				model.addAttribute("uihosplist", hosplist);
+			else if(searchKey.equalsIgnoreCase("Email"))
+			{
+				List<HospitalBean> hospitalsList = hospitalService.getHospitalByEmail(searchValue);
+				if(hospitalsList != null && !hospitalsList.isEmpty())
+				{
+					model.addAttribute("uiHospitalList",hospitalsList);
+					return "getHospitalBoard";
+				}
+				System.out.println("Error");
 				return "getHospitalBoard";
 			}
+			else if(searchKey.equalsIgnoreCase("Address1"))
+			{
+				List<HospitalBean> hospitalsList = hospitalService.getHospitalByAddress1(searchValue);
+				if(hospitalsList != null && !hospitalsList.isEmpty())
+				{
+					model.addAttribute("uiHospitalList",hospitalsList);
+					return "getHospitalBoard";
+				}
+				System.out.println("Error");
+				return "getHospitalBoard";
+			}
+			else if(searchKey.equalsIgnoreCase("Phone"))
+			{
+				List<HospitalBean> hospitalsList = hospitalService.getHospitalByPhone(Long.parseLong(searchValue));
+				if(hospitalsList != null && !hospitalsList.isEmpty())
+				{
+					model.addAttribute("uiHospitalList",hospitalsList);
+					return "getHospitalBoard";
+				}
+				System.out.println("Error");
+				return "getHospitalBoard";
+			}
+			else if(searchKey.equalsIgnoreCase("IsActive"))
+			{
+				List<HospitalBean> hospitalsList = hospitalService.getHospitalByStatus(Boolean.valueOf(searchValue));
+				if(hospitalsList != null && !hospitalsList.isEmpty())
+				{
+					model.addAttribute("uiHospitalList",hospitalsList);
+					return "getHospitalBoard";
+				}
+				System.out.println("Error");
+				return "getHospitalBoard";
+			}
+			System.out.println("Error");
+			return "getHospitalBoard";
 		}
-
-		return null;
+		else
+		{
+			System.out.println("Error");
+			return "getHospitalBoard";
+		}
 	}
-
+	
+	@RequestMapping(value="/getAllHospitalsByPagening")
+	public String getAllHospitalsByPagening(HttpServletRequest request, Model model)
+	{
+		String currentPage = request.getParameter("currentPage");
+		int currentPageInt = Integer.valueOf(currentPage);
+		int noOfRecordsPerPage = ServiceConstants.NUMBER_OF_RECORDS_PER_PAGE;
+		
+		List<HospitalBean> hospitalsList = hospitalService.getAllHospitalsByPagining(currentPageInt, noOfRecordsPerPage);
+		
+		List<HospitalBean> uiHospitalList = hospitalService.getAllHospitals();
+		int uiListSize = uiHospitalList.size();
+		int recordsPerPage = Math.round((uiListSize / ServiceConstants.NUMBER_OF_RECORDS_PER_PAGE) + 1);
+		List<Integer> pageBarList = new ArrayList<Integer>();
+		for(int i = 0; i < recordsPerPage; i++)
+		{
+			pageBarList.add(i + 1);
+		}
+		model.addAttribute("pageBarList",pageBarList);
+		model.addAttribute("loop.count", currentPage);
+		
+		if(hospitalsList != null && !hospitalsList.isEmpty())
+		{
+			model.addAttribute("uiHospitalList",hospitalsList);
+			return "getHospitalBoard";
+		}
+		System.out.println("Error");
+		return "getHospitalBoard";
+	}
+	
+	@ResponseStatus(value=HttpStatus.NOT_FOUND)
+	public String errorPage(){
+		System.out.println(" Exception Occured In ::"+getClass().getName());
+		return "error";
+	}
+	
 }

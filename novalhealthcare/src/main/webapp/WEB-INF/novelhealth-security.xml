@@ -1,0 +1,35 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security"    
+	xmlns:beans="http://www.springframework.org/schema/beans"     
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"    
+	xsi:schemaLocation="http://www.springframework.org/schema/beans    
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd    
+	http://www.springframework.org/schema/security           
+	http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+	
+	<debug/>
+	<http auto-config="true">
+		<!-- <http-basic/> -->
+		<form-login login-page="/getLoginPage" default-target-url="/formLogin"/>
+		<intercept-url pattern="/windowLogin" access="ROLE_USER"/>
+		<logout logout-url="/logout" delete-cookies="JSESSIONID" logout-success-url="/getHomePage"/>
+	</http>
+	
+	<authentication-manager>
+		<authentication-provider ref="cutomAuthenticationProvider">
+			<!-- <jdbc-user-service data-source-ref="dataSrc" users-by-username-query="SELECT userId,password,roleId FROM user_profile where user_profile.userId=?"
+			authorities-by-username-query="SELECT user_profile.userId,role.role from user_profile,role where user_profile.roleId=role.roleId"/>
+			<password-encoder hash="bcrypt"></password-encoder> -->
+			<!-- <user-service>
+				<user name="superadmin@email.com" password="super" authorities="ROLE_USER"/>
+			</user-service> -->
+		<!-- <password-encoder ref="passwordEncoder"></password-encoder> -->
+		</authentication-provider>
+		
+	</authentication-manager>
+	
+	<!-- <global-method-security pre-post-annotations="enabled"></global-method-security> -->
+	
+	<beans:bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+	  <beans:constructor-arg value="12" name="strength"></beans:constructor-arg>
+	</beans:bean>
+</beans:beans>

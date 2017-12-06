@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-  <%-- <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%> --%>
   <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="core"%>
 
@@ -36,8 +35,8 @@
                 <div id="navbar" class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li ><a href="home">Home</a></li>
-                         <li class="active"><i class="icon-home icon-black"></i><a href="getSignUpPage">SignUp</a></li>
-                      
+                         <!-- <li class="active"><i class="icon-home icon-black"></i> -->
+                        <li><a href="getSignUpPage">SignUp</a></li>
                         <li><a href="getLoginPage" >Login</a></li>
                         <li><a href="about">About</a></li>
                         <li><a href="contact">Contact</a></li>
@@ -63,12 +62,12 @@
 					<div class="panel-body">
 						<div class="row">
 							<div class="col-lg-12">
-								<form:form id="login-form" action="./login"  commandName="loginBean" method="GET" role="form" style="display: block;">
+								<form id="login-form" action="./j_spring_security_check" method="POST" role="form" style="display: block;">
 									<div class="form-group">
-										<form:input path="userId" type="text"  id="username" tabindex="1" class="form-control" placeholder="Username" value=""></form:input>
+										<input name="j_username" type="text"  id="username" tabindex="1" class="form-control" placeholder="Username" value=""/>
 									</div>
 									<div class="form-group">
-										<form:input path="password" type="password"  id="password" tabindex="2" class="form-control" placeholder="Password"></form:input>
+										<input name="j_password" type="password"  id="password" tabindex="2" class="form-control" placeholder="Password"/>
 									</div>
 									<div class="form-group text-center">
 										<input type="checkbox" tabindex="3" class="" name="remember" id="remember">
@@ -91,7 +90,7 @@
 										</div>
 									</div>
 								
-								</form:form>
+								</form>
 							</div>
 						</div>
 					</div>

@@ -1,6 +1,5 @@
 package com.dotridge.domain;
 
-import java.io.File;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -8,209 +7,187 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-import org.hibernate.annotations.Type;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
-public class Hospital implements Serializable, Cloneable {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 4365720373839147515L;
-
-	@javax.persistence.Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int Id;
-	@Column(unique = false)
+@Cache(usage=CacheConcurrencyStrategy.READ_ONLY)
+public class Hospital implements Serializable,Cloneable
+{
+	private static final long serialVersionUID = 1L;
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private int hospitalId;
+	@Column(nullable=false,unique=true)
 	private String hospitalName;
-	@Column(nullable = true)
-	private String address1;
-	@Column(nullable = true)
-	private String address2;
-	@Column(nullable = true)
-	private String city;
-	@Column(nullable = true)
-	private String state;
-	@Column(nullable = true)
-	private long zipCode;
-	@Column(nullable = true)
+	@Column(unique=true,nullable=false)
 	private String email;
-	@Column(nullable = true)
+	@Column(unique=true,nullable=false)
 	private long phone;
-	@Column(nullable = true)
-	private String fax;
-	// @Column(nullable=false)
-	private File logo;
-	private File requiredDocument;
+	@Column(unique=true)
+	private long fax;
+	@Column(nullable=false)
+	private String address1;
+	private String address2;
+	@Column(nullable=false)
+	private String city;
+	@Column(nullable=false)
+	private String state;
+	@Column(nullable=false)
+	private int zipCode;
+	private String logo;
+	private String registrationDocument;
+	@Column(nullable=false)
+	private boolean status;
+	@Column(nullable=false)
 	private String createdBy;
+	@Column(nullable=false)
 	private Date createdDate;
+	@Column(nullable=false)
 	private String modifiedBy;
+	@Column(nullable=false)
 	private Date modifiedDate;
-	@Column
-	@Type(type = "yes_no")
-	private boolean status = false;
-
+	
+	/*@OneToMany(targetEntity=Address.class,cascade=CascadeType.ALL)
+	private List<Address> addressList;*/
+	
+	public int getHospitalId() {
+		return hospitalId;
+	}
+	public void setHospitalId(int hospitalId) {
+		this.hospitalId = hospitalId;
+	}
 	public String getHospitalName() {
 		return hospitalName;
 	}
-
 	public void setHospitalName(String hospitalName) {
 		this.hospitalName = hospitalName;
 	}
-
-	public String getAddress1() {
-		return address1;
-	}
-
-	public void setAddress1(String address1) {
-		this.address1 = address1;
-	}
-
-	public String getAddress2() {
-		return address2;
-	}
-
-	public void setAddress2(String address2) {
-		this.address2 = address2;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
-
-	public long getZipCode() {
-		return zipCode;
-	}
-
-	public void setZipCode(long zipCode) {
-		this.zipCode = zipCode;
-	}
-
 	public String getEmail() {
 		return email;
 	}
-
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
 	public long getPhone() {
 		return phone;
 	}
-
 	public void setPhone(long phone) {
 		this.phone = phone;
 	}
-
-	public String getFax() {
+	public long getFax() {
 		return fax;
 	}
-
-	public void setFax(String fax) {
+	public void setFax(long fax) {
 		this.fax = fax;
 	}
-
-	public File getLogo() {
+	public String getLogo() {
 		return logo;
 	}
-
-	public void setLogo(File logo) {
+	public void setLogo(String logo) {
 		this.logo = logo;
 	}
-
-	public File getRequiredDocument() {
-		return requiredDocument;
+	public String getRegistrationDocument() {
+		return registrationDocument;
 	}
-
-	public void setRequiredDocument(File requiredDocument) {
-		this.requiredDocument = requiredDocument;
+	public void setRegistrationDocument(String registrationDocument) {
+		this.registrationDocument = registrationDocument;
 	}
-
-	public String getCreatedBy() {
-		return createdBy;
-	}
-
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	public Date getCreatedDate() {
-		return createdDate;
-	}
-
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
-
-	public String getModifiedBy() {
-		return modifiedBy;
-	}
-
-	public void setModifiedBy(String modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
-
-	public Date getModifiedDate() {
-		return modifiedDate;
-	}
-
-	public void setModifiedDate(Date modifiedDate) {
-		this.modifiedDate = modifiedDate;
-	}
-
 	public boolean isStatus() {
 		return status;
 	}
-
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
-
-	public int getId() {
-		return Id;
+	public String getCreatedBy() {
+		return createdBy;
 	}
-
-	public void setId(int id) {
-		Id = id;
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
 	}
-
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+	public String getModifiedBy() {
+		return modifiedBy;
+	}
+	public void setModifiedBy(String modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+	public Date getModifiedDate() {
+		return modifiedDate;
+	}
+	public void setModifiedDate(Date modifiedDate) {
+		this.modifiedDate = modifiedDate;
+	}
+	public String getAddress1() {
+		return address1;
+	}
+	public void setAddress1(String address1) {
+		this.address1 = address1;
+	}
+	public String getAddress2() {
+		return address2;
+	}
+	public void setAddress2(String address2) {
+		this.address2 = address2;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
+	public int getZipCode() {
+		return zipCode;
+	}
+	public void setZipCode(int zipCode) {
+		this.zipCode = zipCode;
+	}
+	
+	@Override
+	public String toString() {
+		return "Hospital [hospitalId=" + hospitalId + ", hospitalName=" + hospitalName + ", email=" + email + ", phone="
+				+ phone + ", fax=" + fax + ", address1=" + address1 + ", address2=" + address2 + ", city=" + city
+				+ ", state=" + state + ", zipCode=" + zipCode + ", logo=" + logo + ", registrationDocument="
+				+ registrationDocument + ", status=" + status + ", createdBy=" + createdBy + ", createdDate="
+				+ createdDate + ", modifiedBy=" + modifiedBy + ", modifiedDate=" + modifiedDate + "]";
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + Id;
 		result = prime * result + ((address1 == null) ? 0 : address1.hashCode());
 		result = prime * result + ((address2 == null) ? 0 : address2.hashCode());
 		result = prime * result + ((city == null) ? 0 : city.hashCode());
 		result = prime * result + ((createdBy == null) ? 0 : createdBy.hashCode());
 		result = prime * result + ((createdDate == null) ? 0 : createdDate.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + ((fax == null) ? 0 : fax.hashCode());
+		result = prime * result + (int) (fax ^ (fax >>> 32));
+		result = prime * result + hospitalId;
 		result = prime * result + ((hospitalName == null) ? 0 : hospitalName.hashCode());
 		result = prime * result + ((logo == null) ? 0 : logo.hashCode());
 		result = prime * result + ((modifiedBy == null) ? 0 : modifiedBy.hashCode());
 		result = prime * result + ((modifiedDate == null) ? 0 : modifiedDate.hashCode());
 		result = prime * result + (int) (phone ^ (phone >>> 32));
-		result = prime * result + ((requiredDocument == null) ? 0 : requiredDocument.hashCode());
+		result = prime * result + ((registrationDocument == null) ? 0 : registrationDocument.hashCode());
 		result = prime * result + ((state == null) ? 0 : state.hashCode());
 		result = prime * result + (status ? 1231 : 1237);
-		result = prime * result + (int) (zipCode ^ (zipCode >>> 32));
+		result = prime * result + zipCode;
 		return result;
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -220,8 +197,6 @@ public class Hospital implements Serializable, Cloneable {
 		if (getClass() != obj.getClass())
 			return false;
 		Hospital other = (Hospital) obj;
-		if (Id != other.Id)
-			return false;
 		if (address1 == null) {
 			if (other.address1 != null)
 				return false;
@@ -252,10 +227,9 @@ public class Hospital implements Serializable, Cloneable {
 				return false;
 		} else if (!email.equals(other.email))
 			return false;
-		if (fax == null) {
-			if (other.fax != null)
-				return false;
-		} else if (!fax.equals(other.fax))
+		if (fax != other.fax)
+			return false;
+		if (hospitalId != other.hospitalId)
 			return false;
 		if (hospitalName == null) {
 			if (other.hospitalName != null)
@@ -279,10 +253,10 @@ public class Hospital implements Serializable, Cloneable {
 			return false;
 		if (phone != other.phone)
 			return false;
-		if (requiredDocument == null) {
-			if (other.requiredDocument != null)
+		if (registrationDocument == null) {
+			if (other.registrationDocument != null)
 				return false;
-		} else if (!requiredDocument.equals(other.requiredDocument))
+		} else if (!registrationDocument.equals(other.registrationDocument))
 			return false;
 		if (state == null) {
 			if (other.state != null)
@@ -295,10 +269,56 @@ public class Hospital implements Serializable, Cloneable {
 			return false;
 		return true;
 	}
-
+	
+	/*public Hospital(int hospitalId, String hospitalName, String email, long phone, long fax, String address1,
+			String address2, String city, String state, int zipCode, String logo, String registrationDocument,
+			boolean status, String createdBy, Date createdDate, String modifiedBy, Date modifiedDate) {
+		super();
+		this.hospitalId = hospitalId;
+		this.hospitalName = hospitalName;
+		this.email = email;
+		this.phone = phone;
+		this.fax = fax;
+		this.address1 = address1;
+		this.address2 = address2;
+		this.city = city;
+		this.state = state;
+		this.zipCode = zipCode;
+		this.logo = logo;
+		this.registrationDocument = registrationDocument;
+		this.status = status;
+		this.createdBy = createdBy;
+		this.createdDate = createdDate;
+		this.modifiedBy = modifiedBy;
+		this.modifiedDate = modifiedDate;
+	}*/
 	@Override
-	public Object clone() throws CloneNotSupportedException {
-		return super.clone();
+	public Object clone() 
+	{
+		//Hospital hospital = new Hospital(this.hospitalId,hospitalName,email,phone,fax,address1,address2,city,state,zipCode,logo,registrationDocument,status,createdBy,createdDate,modifiedBy,modifiedDate);;
+		/*hospital.setHospitalId(this.hospitalId);
+		hospital.setHospitalName(this.hospitalName);
+		hospital.setEmail(email);
+		hospital.setPhone(phone);
+		hospital.setFax(fax);
+		hospital.setAddress1(this.address1);
+		hospital.setAddress2(address2);
+		hospital.setCity(city);
+		hospital.setState(state);
+		hospital.setZipCode(zipCode);
+		hospital.setCreatedBy(createdBy);
+		hospital.setCreatedDate(createdDate);
+		hospital.setModifiedBy(modifiedBy);
+		hospital.setModifiedDate(modifiedDate);*/
+		//return hospital;
+		try
+		{
+			return super.clone();
+		}
+		catch(CloneNotSupportedException ex)
+		{
+			ex.printStackTrace();
+		}
+		return null;
 	}
-
 }

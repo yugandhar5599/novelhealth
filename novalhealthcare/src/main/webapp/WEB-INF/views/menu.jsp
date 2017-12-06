@@ -10,7 +10,7 @@
 <table>
 
 <tr>
-<td><b fontsize="16">Menu</b><br>
+<td><b fontsize="16">Menu<b></b><br>
 <a href="getEditDoctorPage">doctor</a><br>
 <a href="getEditStaffPage">staff</a><br>
 <a href="getEditLabPage">lab</a><br>

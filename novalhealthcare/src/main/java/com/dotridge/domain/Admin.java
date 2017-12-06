@@ -1,6 +1,5 @@
 package com.dotridge.domain;
 
-import java.io.File;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -12,151 +11,130 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 @Entity
-public class Admin implements Serializable {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -4005448529556717192L;
-
+public class Admin implements Serializable
+{
+	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int adminId;
-
-	@Column(nullable = false)
+	@OneToOne
+	//@JoinColumn(name="hospital_id", unique=true,nullable=false) 
+	private Hospital hospital;
+	@Column(nullable=false)
 	private String firstName;
 	private String middleName;
-	@Column(nullable = false)
+	@Column(nullable=false)
 	private String lastName;
-	@Column(nullable = false)
+	@Column(unique=true, nullable=false)
 	private long phone;
-	@Column(nullable = false)
+	@Column(unique=true, nullable=false)
 	private String email;
-	@Column(nullable = false)
+	@Column(nullable=false)
 	private String password;
-	private File profileDocument;
-	private boolean status = false;
+	private String profileDocuments;
+	@Column(nullable=false)
+	private boolean status;
+	@Column(nullable=false)
 	private String createdBy;
-	private String modifiedBy;
+	@Column(nullable=false)
 	private Date createdDate;
+	@Column(nullable=false)
+	private String modifiedBy;
+	@Column(nullable=false)
 	private Date modifiedDate;
-	@OneToOne
-	private Hospital hospital;
-
 	
-	
-	public int getAdminId() {
-		return adminId;
-	}
-
-	public void setAdminId(int adminId) {
-		this.adminId = adminId;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getMiddleName() {
-		return middleName;
-	}
-
-	public void setMiddleName(String middleName) {
-		this.middleName = middleName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public long getPhone() {
-		return phone;
-	}
-
-	public void setPhone(long phone) {
-		this.phone = phone;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public File getProfileDocument() {
-		return profileDocument;
-	}
-
-	public void setProfileDocument(File profileDocument) {
-		this.profileDocument = profileDocument;
-	}
-
-	public boolean isStatus() {
-		return status;
-	}
-
-	public void setStatus(boolean status) {
-		this.status = status;
-	}
-
-	public String getCreatedBy() {
-		return createdBy;
-	}
-
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	public String getModifiedBy() {
-		return modifiedBy;
-	}
-
-	public void setModifiedBy(String modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
-
-	public Date getCreatedDate() {
-		return createdDate;
-	}
-
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
-
-	public Date getModifiedDate() {
-		return modifiedDate;
-	}
-
-	public void setModifiedDate(Date modifiedDate) {
-		this.modifiedDate = modifiedDate;
-	}
-
 	public Hospital getHospital() {
 		return hospital;
 	}
-
 	public void setHospital(Hospital hospital) {
 		this.hospital = hospital;
 	}
-
+	public int getAdminId() {
+		return adminId;
+	}
+	public void setAdminId(int adminId) {
+		this.adminId = adminId;
+	}
+	public String getFirstName() {
+		return firstName;
+	}
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	public String getMiddleName() {
+		return middleName;
+	}
+	public void setMiddleName(String middleName) {
+		this.middleName = middleName;
+	}
+	public String getLastName() {
+		return lastName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	public long getPhone() {
+		return phone;
+	}
+	public void setPhone(long phone) {
+		this.phone = phone;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public String getProfileDocuments() {
+		return profileDocuments;
+	}
+	public void setProfileDocuments(String profileDocuments) {
+		this.profileDocuments = profileDocuments;
+	}
+	public boolean isStatus() {
+		return status;
+	}
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+	public String getCreatedBy() {
+		return createdBy;
+	}
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+	public String getModifiedBy() {
+		return modifiedBy;
+	}
+	public void setModifiedBy(String modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+	public Date getModifiedDate() {
+		return modifiedDate;
+	}
+	public void setModifiedDate(Date modifiedDate) {
+		this.modifiedDate = modifiedDate;
+	}
+	@Override
+	public String toString() {
+		return "Admin [adminId=" + adminId + ", hospital=" + hospital + ", firstName=" + firstName + ", middleName="
+				+ middleName + ", lastName=" + lastName + ", phone=" + phone + ", email=" + email + ", password="
+				+ password + ", profileDocuments=" + profileDocuments + ", status=" + status + ", createdBy="
+				+ createdBy + ", createdDate=" + createdDate + ", modifiedBy=" + modifiedBy + ", modifiedDate="
+				+ modifiedDate + "]";
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -173,11 +151,10 @@ public class Admin implements Serializable {
 		result = prime * result + ((modifiedDate == null) ? 0 : modifiedDate.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + (int) (phone ^ (phone >>> 32));
-		result = prime * result + ((profileDocument == null) ? 0 : profileDocument.hashCode());
+		result = prime * result + ((profileDocuments == null) ? 0 : profileDocuments.hashCode());
 		result = prime * result + (status ? 1231 : 1237);
 		return result;
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -241,15 +218,14 @@ public class Admin implements Serializable {
 			return false;
 		if (phone != other.phone)
 			return false;
-		if (profileDocument == null) {
-			if (other.profileDocument != null)
+		if (profileDocuments == null) {
+			if (other.profileDocuments != null)
 				return false;
-		} else if (!profileDocument.equals(other.profileDocument))
+		} else if (!profileDocuments.equals(other.profileDocuments))
 			return false;
 		if (status != other.status)
 			return false;
 		return true;
 	}
-
 	
 }

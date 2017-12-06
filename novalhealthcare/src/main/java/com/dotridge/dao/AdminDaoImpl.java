@@ -5,79 +5,148 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
 
 import com.dotridge.domain.Admin;
-import com.dotridge.domain.Hospital;
-import com.dotridge.domain.UserProfile;
 import com.dotridge.util.SessionFactoryUtil;
+
 @Repository
-public class AdminDaoImpl implements AdminDao {
-
-	public Admin addAdmin(Admin admin) {
-		SessionFactory sessionFactory=SessionFactoryUtil.getInstance();
+public class AdminDaoImpl implements AdminDao 
+{
+	public Admin createAdmin(Admin adminDomain) 
+	{
+		SessionFactory sessionFactory = SessionFactoryUtil.getSessionFactory();
 		Session session = sessionFactory.openSession();
-		Transaction trasaction =session.beginTransaction();
-		session.save(admin);
-		trasaction.commit();
+		session.beginTransaction();
+		session.save(adminDomain);
+		session.getTransaction().commit();
 		session.close();
-		return admin;
-
+		return adminDomain;
 	}
 
-	public boolean deleteAdmin(int adminId) {
-		boolean flag = false;
-		SessionFactory sessionFactory=SessionFactoryUtil.getInstance();
+	public Admin updateAdmin(Admin adminDomain) 
+	{
+		SessionFactory sessionFactory = SessionFactoryUtil.getSessionFactory();
 		Session session = sessionFactory.openSession();
-		Admin admin =(Admin)session.get(Admin.class, adminId);
-		session.delete(admin); 
-		admin =(Admin)session.get(Admin.class, adminId);
-		if(admin==null){
-			flag=true;
+		session.beginTransaction();
+		
+		session.update(adminDomain);
+		session.getTransaction().commit();
+		session.close();
+		return adminDomain;
+	}
+
+	public Admin getAdminById(int id) 
+	{
+		SessionFactory sessionFactory = SessionFactoryUtil.getSessionFactory();
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		Admin adminDomain = (Admin)session.load(Admin.class, id);
+		session.getTransaction().commit();
+		//session.close();
+		return adminDomain;
+	}
+
+	public List<Admin> getAdminByName(String firstName) 
+	{
+		SessionFactory sessionFactory = SessionFactoryUtil.getSessionFactory();
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		
+		String hql = "from Admin a where a.firstName like:adminFirstName";
+		Query query = session.createQuery(hql);
+		query.setParameter("adminFirstName", "%" + firstName + "%");
+		List<Admin> adminDomains = query.list();
+		session.close();
+		return adminDomains;
+	}
+	
+	public List<Admin> getAdminByEmail(String email)
+	{
+		SessionFactory sessionFactory = SessionFactoryUtil.getSessionFactory();
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		
+		String hql = "from Admin ad where ad.email like:adminMail";
+		Query query = session.createQuery(hql);
+		query.setParameter("adminMail", "%" + email + "%");
+		List<Admin> admins = query.list();
+		session.close();
+		return admins;
+	}
+	
+	public List<Admin> getAdminByPhone(long phoneNumber)
+	{
+		SessionFactory sessionFactory = SessionFactoryUtil.getSessionFactory();
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		
+		String hql = "from Admin ad where ad.phone=:phone";
+		Query  query = session.createQuery(hql);
+		query.setParameter("phone", phoneNumber);
+		List<Admin> admins = query.list();
+		session.close();
+		return admins;
+	}
+	
+	public List<Admin> getAdminByStatus(Boolean status)
+	{
+		SessionFactory sessionFactory = SessionFactoryUtil.getSessionFactory();
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		
+		String hql = "from Admin ad where ad.status=:IsActive";
+		Query  query = session.createQuery(hql);
+		query.setParameter("IsActive", status);
+		List<Admin> admins = query.list();
+		session.close();
+		return admins;
+	}
+
+	public List<Admin> getAllAdmins() 
+	{
+		SessionFactory sessionFactory = SessionFactoryUtil.getSessionFactory();
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		
+		String hql = "from Admin";
+		Query query = session.createQuery(hql);
+		List<Admin> adminDomains = query.list();
+		session.close();
+		return adminDomains;
+	}
+
+	public boolean deleteAdmin(int id) 
+	{
+		SessionFactory sessionFactory = SessionFactoryUtil.getSessionFactory();
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		Admin adminDomain = (Admin)session.load(Admin.class, id);
+		session.delete(adminDomain);
+		session.getTransaction().commit();
+		session.clear();
+		session.close();
+		System.out.println(adminDomain);
+		if(adminDomain == null)
+		{
+			return true;
 		}
-		return flag;
+		return false;
 	}
 
-	public boolean activateAdmin(int adminId) {
-			SessionFactory sessionFactory=SessionFactoryUtil.getInstance();
-			Session session = sessionFactory.openSession();
-			Admin admin =(Admin)session.load(Admin.class, adminId);
-			admin.setStatus(true);
-			session.update(admin);
-			session.close();
-			return admin.isStatus();
-	}
-
-	public boolean inactivateAdmin(int adminId) {
-		SessionFactory sessionFactory=SessionFactoryUtil.getInstance();
+	public List<Admin> getAllAdminsByPagining(int currentPage, int numberOfRecords) 
+	{
+		SessionFactory sessionFactory = SessionFactoryUtil.getSessionFactory();
 		Session session = sessionFactory.openSession();
-		Admin admin =(Admin)session.load(Admin.class, adminId);
-		admin.setStatus(false);
-		session.update(admin);
+		session.beginTransaction();
+		
+		String hql = "from Admin";
+		Query query = session.createQuery(hql);
+		query.setFirstResult((currentPage - 1) * numberOfRecords);
+		query.setMaxResults(numberOfRecords);
+		List<Admin> adminDomains = query.list();
 		session.close();
-		return admin.isStatus();
-	}
-
-	public List<Admin> getAllAdmins() {
-		SessionFactory sessionFactory = SessionFactoryUtil.getInstance();
-		Session session = sessionFactory.openSession();
-		Query query = session.createQuery("from admin");
-		List<Admin> listofadmins = query.list();
-
-		session.close();
-		System.out.println("list of users are" + listofadmins.size());
-		return listofadmins;
-	}
-
-	public List<Admin> searchAdmin(String firstName, String lastName, String email, long phone, boolean status) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Admin getAdminById(int adminId) {
-		// TODO Auto-generated method stub
-		return null;
+		return adminDomains;
 	}
 
 }

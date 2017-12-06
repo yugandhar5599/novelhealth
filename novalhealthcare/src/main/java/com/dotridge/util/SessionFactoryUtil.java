@@ -2,35 +2,27 @@ package com.dotridge.util;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
+import org.hibernate.service.ServiceRegistryBuilder;
 
-public class SessionFactoryUtil {
+public class SessionFactoryUtil 
+{
+	private static final SessionFactory sessionFactory = buildSessionFactoryInClass();
 
-	private static SessionFactory sessionFactory = null;
-
-	private SessionFactoryUtil() {
-		// no operation
+	private SessionFactoryUtil()
+	{
+		
 	}
-
-	public static SessionFactory getInstance() {
-
-		if(sessionFactory==null){
-			Configuration configuration = new Configuration().configure();
-			sessionFactory = configuration.buildSessionFactory();
-		}
-		
-		
-		/*if (sessionFactory == null) {
-			synchronized (SessionFactoryUtil.class) {
-				if (sessionFactory == null) {
-					Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
-					sessionFactory = configuration.buildSessionFactory();
-				}
-
-			}
-
-		}*/
-
+	
+	private static SessionFactory buildSessionFactoryInClass() 
+	{
+		Configuration configuration = new Configuration().configure();
+		ServiceRegistry serviceRegistry = new ServiceRegistryBuilder().applySettings(configuration.getProperties()).buildServiceRegistry();
+		return configuration.buildSessionFactory(serviceRegistry);
+	}
+	
+	public static SessionFactory getSessionFactory()
+	{
 		return sessionFactory;
-
 	}
 }

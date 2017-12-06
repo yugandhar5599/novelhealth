@@ -16,7 +16,7 @@
   
             <!-- <ul id="menu-content">  -->
             <div class="panel panel-primary">
-            <img src="./resources/images/hospital-logo.jpg" alt="logo" class="img img-responsive"  width="50" height="50"/>
+            <img src="resources/images/hospital-logo.jpg" alt="logo" class="img img-responsive"  width="50" height="50"/>
                 <div class="panel-body">
     <a href="#">
                   <i class="glyphicon glyphicon-header">Dashboard</i> 
@@ -26,7 +26,7 @@
 </div>
 
 <div class="panel panel-primary">
-<img src="./resources/images/hospital-logo.jpg" alt="logo" class="img img-responsive"  width="50" height="50"/>
+<img src="resources/images/hospital-logo.jpg" alt="logo" class="img img-responsive"  width="50" height="50"/>
                 <div class="panel-body">
                <div class="dropdown"> <a href="#" class="dropdown-toggle"
 				data-toggle="dropdown" role="button" aria-haspopup="true"
@@ -34,15 +34,15 @@
     <span class="label label-success">Hospital Management</span><span class="caret"></span></a>
                 
                 <ul class="dropdown-menu">
-                    <li class="active"><a href="./hospitalMgmt/getAllHospitals"><span class="label label-primary">View Hospitals</span></a></li>
+                    <li class="active"><a href="#"><span class="label label-primary">Hospitals</span></a></li>
                     
                 </ul>
   </div>
 </div></div>
 <div class="panel panel-success">
-<img src="./resources/images/doctor3.jpg" alt="logo" class="img img-responsive"  width="50" height="50"/>
+<img src="resources/images/doctor3.jpg" alt="logo" class="img img-responsive"  width="50" height="50"/>
                 <div class="panel-body">
-               <div class="dropdown"> <a href="./userMgmt/getAllUsers" class="dropdown-toggle"
+               <div class="dropdown"> <a href="#" class="dropdown-toggle"
 				data-toggle="dropdown" role="button" aria-haspopup="true"
 				aria-expanded="false">
     <span class="label label-primary">User Management</span><span class="caret"></span></a>
