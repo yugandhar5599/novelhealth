@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:context="http://www.springframework.org/schema/context"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:p="http://www.springframework.org/schema/p"
+xmlns:mvc="http://www.springframework.org/schema/mvc"
+xmlns:jee="http://www.springframework.org/schema/jee"
+xmlns:tx="http://www.springframework.org/schema/tx"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context.xsd
+http://www.springframework.org/schema/jee
+http://www.springframework.org/schema/jee/spring-jee.xsd
+http://www.springframework.org/schema/tx
+http://www.springframework.org/schema/tx/spring-tx.xsd
+http://www.springframework.org/schema/mvc
+http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd 
+">
+ <context:component-scan 
+ base-package="com.siri.esmartHealthCare.services">
+ </context:component-scan>
+ <context:component-scan 
+ base-package="com.siri.esmartHealthCare.dao">
+ </context:component-scan>
+ 
+ <context:component-scan 
+ base-package="com.siri.esmartHealthCare.config">
+ </context:component-scan>
+ 
+
+<!-- <jee:jndi-lookup id="ds" jndi-name="jdbc/espcspring"/> -->
+<tx:annotation-driven transaction-manager="txnManager"/>
+<bean id="ds" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+    <property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+    <property name="url" value="jdbc:mysql://localhost:3306/esmart_final"></property>
+    <property name="username" value="root"></property>
+    <property name="password" value="root"></property>
+  </bean> 
+  
+  <bean id="sf" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+  <property name="dataSource" ref="ds"></property>
+   
+    <property name="hibernateProperties">
+      <props>
+        <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+       <!--  <prop key="hibernate.show_sql">true</prop>
+        <prop key="hibernate.format_sql">true</prop> -->
+        <prop key="hibernate.hbm2ddl.auto">update</prop>
+      </props>
+    </property>
+    
+    <property name="packagesToScan">
+      <array>
+       <value>com.siri.esmartHealthCare.domain</value>
+      </array>
+    </property>
+  
+  </bean>
+  
+  <!-- JMS settings -->
+  <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+    <!-- SMTP settings -->
+   <property name="host" value="smtp.gmail.com" />  
+    <property name="port" value="587"></property>
+    <!-- <property name="username" value="veera.arunkumar714@gmail.com" />  
+    <property name="password" value="9704146030" />  
+  -->
+  
+   <property name="username" value="venumca13@gmail.com" />  
+    <property name="password" value="9032714415" />  
+ 
+    <property name="javaMailProperties">
+        <!-- additional properties specific to JavaMail -->
+        <props>
+           <prop key="mail.smtp.auth">true</prop>
+       <prop key="mail.smtp.starttls.enable">true</prop>
+      </props>
+    </property>
+</bean>
+  
+  
+  
+  <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="classpath:message" />
+		<!-- <property name="defaultEncoding" value="UTF-8" /> -->
+	</bean>
+  <bean id="txnManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+  <property name="sessionFactory" ref="sf"></property>
+</bean>
+  
+ </beans>

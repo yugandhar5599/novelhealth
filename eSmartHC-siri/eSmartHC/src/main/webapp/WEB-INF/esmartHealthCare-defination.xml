@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" 
+"http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+<definition name="baseLayout" template="/WEB-INF/views/base_layout.jsp">
+<put-attribute name="header" value="/WEB-INF/views/header.jsp"></put-attribute>
+<put-attribute name="body" value=""></put-attribute>
+<put-attribute name="footer" value="/WEB-INF/views/footer.jsp"></put-attribute>
+</definition>
+
+<!-- <definition name="getHome">
+<put-attribute name="body" value="/WEB-INF/views/home.jsp"></put-attribute>
+</definition> -->
+
+<definition name="getSignup" extends="baseLayout">
+<put-attribute name="body" value="/WEB-INF/views/signup.jsp"></put-attribute>
+</definition>
+
+<definition name="getResult" extends="baseLayout">
+<put-attribute name="body" value="/WEB-INF/views/result.jsp"></put-attribute>
+</definition>
+<!-- <definition name="getLogin" extends="baseLayout">
+<put-attribute name="body" value="/WEB-INF/views/login.jsp"></put-attribute>
+</definition> -->
+<definition name="getAdmin" extends="baseLayout">
+<put-attribute name="header" value="/WEB-INF/views/admin/header.jsp"></put-attribute>
+<put-attribute name="body" value="/WEB-INF/views/admin.jsp"></put-attribute>
+</definition>
+
+<definition name="getStaff" extends="baseLayout">
+<put-attribute name="body" value="/WEB-INF/views/staffoper.jsp"></put-attribute>
+</definition>
+<definition name="getEditDoctor" extends="baseLayout">
+<put-attribute name="body" value="/WEB-INF/views/doctoroperations.jsp"></put-attribute>
+</definition>
+<definition name="getAddDoctorPage">
+<put-attribute name="body" value="/WEB-INF/views/addDoctor.jsp"></put-attribute>
+</definition>
+<!-- <definition name="getEditDoctorPage" extends="baseLayout">
+<put-attribute name="body" value="/WEB-INF/views/editDoctor.jsp"></put-attribute>
+</definition> -->
+<definition name="getSearchDoctor" extends="baseLayout">
+<put-attribute name="body" value="/WEB-INF/views/searchDoctor.jsp"></put-attribute>
+</definition>
+<definition name="getEditPharma" extends="baseLayout">
+<put-attribute name="body" value="/WEB-INF/views/pharmaOperations.jsp"></put-attribute>
+</definition>
+<definition name="getEditStaff" extends="baseLayout">
+<put-attribute name="body" value="/WEB-INF/views/staffOperations.jsp"></put-attribute>
+</definition>
+<definition name="getAddStaffPage" extends="baseLayout">
+<put-attribute name="body" value="/WEB-INF/views/addStaff.jsp"></put-attribute>
+</definition>
+<definition name="getEditStaffPage" extends="baseLayout">
+<put-attribute name="body" value="/WEB-INF/views/editStaff.jsp"></put-attribute>
+</definition>
+<definition name="getSearchStaff" extends="baseLayout">
+<put-attribute name="body" value="/WEB-INF/views/searchStaff.jsp"></put-attribute>
+</definition>
+
+<definition name="getEditLab" extends="baseLayout">
+<put-attribute name="body" value="/WEB-INF/views/labOperations.jsp"></put-attribute>
+</definition>
+<definition name="getAddLabPage" extends="baseLayout">
+<put-attribute name="body" value="/WEB-INF/views/addLab.jsp"></put-attribute>
+</definition>
+<definition name="getEditLabPage" extends="baseLayout">
+<put-attribute name="body" value="/WEB-INF/views/editLab.jsp"></put-attribute>
+</definition>
+<definition name="getSearchLab" extends="baseLayout">
+<put-attribute name="body" value="/WEB-INF/views/searchLab.jsp"></put-attribute>
+</definition>
+
+<definition name="getEditPharma" extends="baseLayout">
+<put-attribute name="body" value="/WEB-INF/views/pharmaOperations.jsp"></put-attribute>
+</definition>
+<definition name="getAddPharmaPage" extends="baseLayout">
+<put-attribute name="body" value="/WEB-INF/views/addPharma.jsp"></put-attribute>
+</definition>
+<definition name="getEditPharmaPage" extends="baseLayout">
+<put-attribute name="body" value="/WEB-INF/views/editPharma.jsp"></put-attribute>
+</definition>
+<definition name="getSearchPharma" extends="baseLayout">
+<put-attribute name="body" value="/WEB-INF/views/searchPharma.jsp"></put-attribute>
+</definition>
+
+<definition name="getPharmacy" extends="baseLayout">
+<put-attribute name="body" value="/WEB-INF/views/pharmacy.jsp"></put-attribute>
+</definition>
+
+<definition name="getPatients" extends="baseLayout">
+<put-attribute name="body" value="/WEB-INF/views/PatientDetails.jsp"></put-attribute>
+</definition>
+<definition name="getDoctors" extends="baseLayout">
+<put-attribute name="body" value="/WEB-INF/views/DoctorsDetails.jsp"></put-attribute>
+</definition>
+<definition name="getMedicines" extends="baseLayout">
+<put-attribute name="body" value="/WEB-INF/views/MedicinesDetails.jsp"></put-attribute>
+</definition>
+<definition name="getaddMedicinesPage" extends="baseLayout">
+<put-attribute name="body" value="/WEB-INF/views/addMedicines.jsp"></put-attribute>
+</definition>
+<definition name="geteditMedicinesPage" extends="baseLayout">
+<put-attribute name="body" value="/WEB-INF/views/editMedicines.jsp"></put-attribute>
+</definition>
+<definition name="getRequiredMedicines" extends="baseLayout">
+<put-attribute name="body" value="/WEB-INF/views/requiredMedicinesDetails.jsp"></put-attribute>
+</definition>
+
+<definition name="getAddPatientPage" extends="baseLayout">
+<put-attribute name="body" value="/WEB-INF/views/addInPatient.jsp"></put-attribute>
+</definition>
+</tiles-definitions>
